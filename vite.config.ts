@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import path from 'path';
 import checker from 'vite-plugin-checker';
 
 // https://vite.dev/config/
@@ -17,4 +18,12 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  resolve: {
+    alias: [
+      {
+        find: '#',
+        replacement: path.resolve(__dirname, 'src/shared'),
+      },
+    ],
+  },
 });
