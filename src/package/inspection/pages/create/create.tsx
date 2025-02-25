@@ -37,10 +37,11 @@ function InspectionPageCreate() {
 
       await Promise.all(
         data.inspections.map(async (inspection, index) => {
-          const formData = new FormData();
-          formData.append('file', inspection.file!);
-
-          await axios.put(presignedURLs[index], formData);
+          await axios.put(presignedURLs[index], inspection.file, {
+            headers: {
+              'Content-Type': inspection.file?.type,
+            },
+          });
         }),
       );
 
@@ -55,11 +56,11 @@ function InspectionPageCreate() {
 
   return (
     <>
-      <Spin spinning={loading} fullscreen size="large" tip="Submitting..." />
-
       <FormProvider {...form}>
         <InspectionForm onSubmit={handleSubmit} />
       </FormProvider>
+
+      <Spin spinning={loading} fullscreen size="large" tip="Submitting..." />
     </>
   );
 }
