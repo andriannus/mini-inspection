@@ -14,7 +14,7 @@ function InspectionPageCreate() {
 
   const form = useForm<InspectionFormData>({
     defaultValues: {
-      inspections: [],
+      inspections: [{ file: undefined, name: undefined }],
     },
   });
 
@@ -32,7 +32,7 @@ function InspectionPageCreate() {
         files: data.inspections.map((inspection) => {
           return {
             custom_name: inspection.name,
-            name: inspection.file.name,
+            name: inspection.file!.name,
           };
         }),
       };
@@ -42,7 +42,7 @@ function InspectionPageCreate() {
       await Promise.all(
         data.inspections.map(async (inspection, index) => {
           const formData = new FormData();
-          formData.append('file', inspection.file);
+          formData.append('file', inspection.file!);
 
           await axios.put(presignedURLs[index], formData);
         }),

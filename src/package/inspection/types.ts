@@ -1,5 +1,5 @@
 export type InspectionFormData = {
-  inspections: { name: string; file: File }[];
+  inspections: { name: string; file?: File }[];
 };
 
 export type PayloadGeneratePresigned = {
