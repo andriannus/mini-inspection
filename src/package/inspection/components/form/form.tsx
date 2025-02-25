@@ -1,5 +1,5 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Col, Upload } from 'antd';
+import { Button, Col, Typography, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -17,7 +17,7 @@ type InspectionFormProps = {
 
 function InspectionForm({ onSubmit }: InspectionFormProps) {
   const form = useFormContext<InspectionFormData>();
-  const values = useFormValues();
+  const values = useFormValues<InspectionFormData>();
 
   const fieldArray = useFieldArray({
     control: form.control,
@@ -25,8 +25,16 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
   });
 
   const onFileSelected = (file: RcFile, index: number) => {
+    const indexWithoutFile = values.inspections.findIndex((i) => !i.file);
+
     if (!values.inspections[index].file) {
-      form.setValue(`inspections.${index}.file`, file);
+      form.setValue(`inspections.${index}.file`, file, {
+        shouldValidate: true,
+      });
+    } else if (indexWithoutFile > -1) {
+      form.setValue(`inspections.${indexWithoutFile}.file`, file, {
+        shouldValidate: true,
+      });
     } else {
       fieldArray.append({ name: '', file });
     }
@@ -82,18 +90,35 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
                       />
                     </>
                   ) : (
-                    <Upload.Dragger
-                      accept="image/*"
-                      customRequest={(options) => {
-                        onFileSelected(options.file as RcFile, index);
+                    <Controller
+                      control={form.control}
+                      name={`inspections.${index}.file`}
+                      rules={{ required: 'Select a file' }}
+                      render={({ fieldState }) => {
+                        return (
+                          <>
+                            <Upload.Dragger
+                              accept="image/*"
+                              customRequest={(options) => {
+                                onFileSelected(options.file as RcFile, index);
+                              }}
+                              multiple
+                              showUploadList={false}
+                            >
+                              <InboxOutlined />
+                              <p>Click or drag file to this area to upload</p>
+                              <p>Support for a single or bulk upload</p>
+                            </Upload.Dragger>
+
+                            {fieldState.error && (
+                              <Typography.Text type="danger">
+                                {fieldState.error.message}
+                              </Typography.Text>
+                            )}
+                          </>
+                        );
                       }}
-                      multiple
-                      showUploadList={false}
-                    >
-                      <InboxOutlined />
-                      <p>Click or drag file to this area to upload</p>
-                      <p>Support for a single or bulk upload</p>
-                    </Upload.Dragger>
+                    />
                   )}
                 </StyedCard>
               </Col>
