@@ -1,5 +1,10 @@
-import { FileSearchOutlined, HomeFilled } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import {
+  FileSearchOutlined,
+  HomeFilled,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from '@ant-design/icons';
+import { Button, Layout, Menu } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
 import {
@@ -9,14 +14,23 @@ import {
   StyledHeader,
   StyledSider,
 } from './styles';
+import { useState } from 'react';
 
 function SharedLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
     <Layout hasSider>
-      <StyledSider breakpoint="lg" collapsedWidth={0}>
+      <StyledSider
+        breakpoint="lg"
+        collapsed={collapsed}
+        collapsedWidth={0}
+        collapsible
+        trigger={null}
+      >
         <Logo />
 
         <Menu
@@ -53,7 +67,18 @@ function SharedLayout() {
       </StyledSider>
 
       <Layout>
-        <StyledHeader />
+        <StyledHeader>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 64,
+            }}
+          />
+        </StyledHeader>
 
         <StyledContent>
           <Outlet />
