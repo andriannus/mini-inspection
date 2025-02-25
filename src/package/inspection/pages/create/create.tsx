@@ -21,10 +21,6 @@ function InspectionPageCreate() {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data: InspectionFormData) => {
-    if (data.inspections.length < 1) {
-      return;
-    }
-
     try {
       setLoading(true);
 

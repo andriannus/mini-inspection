@@ -1,5 +1,5 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Col, Typography, Upload } from 'antd';
+import { Button, Col, Typography } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -9,7 +9,14 @@ import { useFormValues } from '#/hooks/use-form-values';
 import { InspectionFormData } from '~/inspection/types';
 
 import { COL_PROPS } from './constants';
-import { CardForAction, StyedCard, StyledImage, StyledRow } from './styles';
+import {
+  CardForAction,
+  StyedCard,
+  StyledImage,
+  StyledRow,
+  StyledUploadDragger,
+  WrapperForIcon,
+} from './styles';
 
 type InspectionFormProps = {
   onSubmit: (data: InspectionFormData) => void;
@@ -97,7 +104,7 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
                       render={({ fieldState }) => {
                         return (
                           <>
-                            <Upload.Dragger
+                            <StyledUploadDragger
                               accept="image/*"
                               customRequest={(options) => {
                                 onFileSelected(options.file as RcFile, index);
@@ -105,10 +112,18 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
                               multiple
                               showUploadList={false}
                             >
-                              <InboxOutlined />
-                              <p>Click or drag file to this area to upload</p>
-                              <p>Support for a single or bulk upload</p>
-                            </Upload.Dragger>
+                              <WrapperForIcon>
+                                <InboxOutlined />
+                              </WrapperForIcon>
+
+                              <Typography.Title level={5}>
+                                Click or drag file to this area to upload
+                              </Typography.Title>
+
+                              <Typography.Text type="secondary">
+                                Support for a single or bulk upload
+                              </Typography.Text>
+                            </StyledUploadDragger>
 
                             {fieldState.error && (
                               <Typography.Text type="danger">

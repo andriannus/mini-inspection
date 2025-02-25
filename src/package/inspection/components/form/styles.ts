@@ -1,4 +1,4 @@
-import { Card, Image, Row } from 'antd';
+import { Card, Image, Row, Upload } from 'antd';
 import styled from 'styled-components';
 
 export const StyledRow = styled(Row)`
@@ -29,12 +29,25 @@ export const StyledImage = styled(Image)`
   width: 100%;
 `;
 
+export const StyledUploadDragger = styled(Upload.Dragger)`
+  display: block;
+  height: 354px;
+`;
+
 export const CardForAction = styled.div`
   align-items: center;
   border: 1px solid #f0f0f0;
   border-radius: 8px;
   display: flex;
   height: 100%;
+  min-height: 398px;
   justify-content: center;
   width: 100%;
+`;
+
+export const WrapperForIcon = styled.div`
+  color: #1677ff;
+  display: flex;
+  font-size: 48px;
+  justify-content: center;
 `;
