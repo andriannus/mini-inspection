@@ -1,12 +1,13 @@
 import { Typography } from 'antd';
-
-import { PageTitle } from '#/components/page-title';
+import { useEffect } from 'react';
 
 function StandalonePageCreate() {
+  useEffect(() => {
+    document.title = 'Welcome to Inspection';
+  }, []);
+
   return (
     <>
-      <PageTitle value="Welcome to Inspection" />
-
       <Typography.Title>Oh hi! Welcome to Inspection App.</Typography.Title>
 
       <Typography.Paragraph>

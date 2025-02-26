@@ -11,9 +11,7 @@ import {
 } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
-import { lazy, Suspense, useMemo, useState } from 'react';
-
-import { PageTitle } from '#/components/page-title';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 
 import { fetchInspectionFiles } from '~/inspection/apis/upload';
 import { COL_PROPS } from '~/inspection/components/form/constants';
@@ -61,6 +59,10 @@ function InspectionPageImage() {
     },
   });
 
+  useEffect(() => {
+    document.title = 'Inspection Images';
+  }, []);
+
   if (queryFiles.isFetching && !queryFiles.isFetchingNextPage) {
     return (
       <ContainerForAction>
@@ -73,8 +75,6 @@ function InspectionPageImage() {
 
   return (
     <>
-      <PageTitle value="Inspection Images" />
-
       <StyledRow gutter={[16, 16]}>
         <Col sm={24} lg={12} xl={8}>
           <Typography.Text strong>Filter by date</Typography.Text>

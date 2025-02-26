@@ -1,17 +1,18 @@
 import { Button, Empty } from 'antd';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-
-import { PageTitle } from '#/components/page-title';
 
 import { Layout } from './styles';
 
 function StandalonePage404() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = '404';
+  }, []);
+
   return (
     <>
-      <PageTitle value="404" />
-
       <Layout>
         <Empty
           image={Empty.PRESENTED_IMAGE_SIMPLE}
