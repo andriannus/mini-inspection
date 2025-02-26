@@ -1,7 +1,15 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Button, Col, Image, Row, Spin } from 'antd';
+import { Button, Col, Row, Spin } from 'antd';
+import { lazy } from 'react';
 
 import { fetchInspectionFiles } from '~/inspection/apis/upload';
+import { COL_PROPS } from '~/inspection/components/form/constants';
+
+const ImageCard = lazy(() =>
+  import('./components/card').then((module) => ({
+    default: module.ImageCard,
+  })),
+);
 
 function InspectionPageImage() {
   const queryFiles = useInfiniteQuery({
@@ -39,8 +47,8 @@ function InspectionPageImage() {
         {queryFiles.data?.pages.map((group) => {
           return group.files.map((file) => {
             return (
-              <Col key={file._id} span={4}>
-                <Image src={file.url} />
+              <Col key={file._id} {...COL_PROPS} xxl={4}>
+                <ImageCard file={file} />
               </Col>
             );
           });
