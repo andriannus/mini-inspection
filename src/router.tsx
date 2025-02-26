@@ -3,6 +3,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 import { Layout } from '#/components/layout';
 
+const StandalonePage404 = lazy(() =>
+  import('./package/standalone/pages/404').then((module) => ({
+    default: module.StandalonePage404,
+  })),
+);
+
 const StandalonePageHome = lazy(() =>
   import('./package/standalone/pages/home').then((module) => ({
     default: module.StandalonePageHome,
@@ -25,6 +31,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="*" element={<StandalonePage404 />} />
         <Route path="/" element={<Navigate to="/home" />} />
 
         <Route path="/" element={<Layout />}>
