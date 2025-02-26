@@ -27,9 +27,10 @@ function SharedLayout() {
       <StyledSider
         breakpoint="lg"
         collapsed={collapsed}
-        collapsedWidth={0}
         collapsible
-        trigger={null}
+        onBreakpoint={(broken) => {
+          setCollapsed(broken);
+        }}
       >
         <Logo />
 
