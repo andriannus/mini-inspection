@@ -28,6 +28,7 @@ function SharedLayout() {
         breakpoint="lg"
         collapsed={collapsed}
         collapsible
+        trigger={null}
         onBreakpoint={(broken) => {
           setCollapsed(broken);
         }}

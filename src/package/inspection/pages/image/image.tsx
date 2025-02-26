@@ -28,13 +28,17 @@ function InspectionPageImage() {
   const queryFiles = useInfiniteQuery({
     queryKey: ['inspection-files', dateRange[0], dateRange[1]],
     queryFn: ({ pageParam }) => {
-      return fetchInspectionFiles({
-        params: {
-          page: pageParam,
-          start_date: dateRange[0],
-          end_date: dateRange[1],
-        },
-      });
+      const params: Record<string, unknown> = { page: pageParam };
+
+      if (dateRange[0]) {
+        params.start_date = dateRange[0];
+      }
+
+      if (dateRange[1]) {
+        params.end_date = dateRange[1];
+      }
+
+      return fetchInspectionFiles({ params });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
