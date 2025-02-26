@@ -5,6 +5,8 @@ import { lazy } from 'react';
 import { fetchInspectionFiles } from '~/inspection/apis/upload';
 import { COL_PROPS } from '~/inspection/components/form/constants';
 
+import { ContainerForAction } from './styles';
+
 const ImageCard = lazy(() =>
   import('./components/card').then((module) => ({
     default: module.ImageCard,
@@ -32,7 +34,11 @@ function InspectionPageImage() {
   });
 
   if (queryFiles.isFetching && !queryFiles.isFetchingNextPage) {
-    return <Spin />;
+    return (
+      <ContainerForAction>
+        <Spin size="large" />
+      </ContainerForAction>
+    );
   }
 
   if (queryFiles.isError) return null;
@@ -55,10 +61,23 @@ function InspectionPageImage() {
         })}
       </Row>
 
-      {queryFiles.isFetchingNextPage && <Spin />}
+      {queryFiles.isFetchingNextPage && (
+        <ContainerForAction>
+          <Spin size="large" />
+        </ContainerForAction>
+      )}
 
       {!queryFiles.isFetchingNextPage && queryFiles.hasNextPage && (
-        <Button type="primary">Load More</Button>
+        <ContainerForAction>
+          <Button
+            type="primary"
+            onClick={() => {
+              queryFiles.fetchNextPage();
+            }}
+          >
+            Load More
+          </Button>
+        </ContainerForAction>
       )}
     </>
   );
