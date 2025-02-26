@@ -4,6 +4,8 @@ import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
 import { lazy, useMemo, useState } from 'react';
 
+import { PageTitle } from '#/components/page-title';
+
 import { fetchInspectionFiles } from '~/inspection/apis/upload';
 import { COL_PROPS } from '~/inspection/components/form/constants';
 
@@ -62,6 +64,8 @@ function InspectionPageImage() {
 
   return (
     <>
+      <PageTitle value="Inspection Images" />
+
       <StyledRow gutter={[16, 16]}>
         <Col sm={24} lg={12} xl={8}>
           <Typography.Text strong>Filter by date</Typography.Text>

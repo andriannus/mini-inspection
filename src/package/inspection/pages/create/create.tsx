@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { PageTitle } from '#/components/page-title';
 import { useMessage } from '#/contexts/message';
 
 import { generatePresignedURLs } from '~/inspection/apis/upload';
@@ -56,6 +57,8 @@ function InspectionPageCreate() {
 
   return (
     <>
+      <PageTitle value="Create Inspection" />
+
       <FormProvider {...form}>
         <InspectionForm onSubmit={handleSubmit} />
       </FormProvider>
