@@ -4,6 +4,7 @@ import type { RcFile } from 'antd/es/upload';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Input } from '#/components/input';
+import { useMessage } from '#/contexts/message';
 import { useFormValues } from '#/hooks/use-form-values';
 
 import type { InspectionFormData } from '~/inspection/types';
@@ -25,6 +26,7 @@ type InspectionFormProps = {
 function InspectionForm({ onSubmit }: InspectionFormProps) {
   const form = useFormContext<InspectionFormData>();
   const values = useFormValues<InspectionFormData>();
+  const message = useMessage();
 
   const fieldArray = useFieldArray({
     control: form.control,
@@ -47,6 +49,18 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
     }
   };
 
+  const onFileRemoved = (index: number) => {
+    if (fieldArray.fields.length <= 1) {
+      fieldArray.append({ name: '', file: undefined });
+    }
+
+    if (!values.inspections[index].file) {
+      message.info?.('At least one image is required');
+    }
+
+    fieldArray.remove(index);
+  };
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       {fieldArray.fields.length > 0 && (
@@ -57,18 +71,16 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
                 <StyedCard
                   title={`Image ${index + 1}`}
                   extra={
-                    fieldArray.fields.length > 1 && (
-                      <Button
-                        danger
-                        size="small"
-                        type="text"
-                        onClick={() => {
-                          fieldArray.remove(index);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    )
+                    <Button
+                      danger
+                      size="small"
+                      type="text"
+                      onClick={() => {
+                        onFileRemoved(index);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   }
                   size="small"
                 >
@@ -100,7 +112,7 @@ function InspectionForm({ onSubmit }: InspectionFormProps) {
                     <Controller
                       control={form.control}
                       name={`inspections.${index}.file`}
-                      rules={{ required: 'Select a file' }}
+                      rules={{ required: 'Select an image' }}
                       render={({ fieldState }) => {
                         return (
                           <>
