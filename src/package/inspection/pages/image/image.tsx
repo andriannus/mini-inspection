@@ -1,8 +1,17 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Button, Col, DatePicker, Empty, Row, Spin, Typography } from 'antd';
+import {
+  Button,
+  Col,
+  DatePicker,
+  Empty,
+  Flex,
+  Row,
+  Spin,
+  Typography,
+} from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
-import { lazy, useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 
 import { PageTitle } from '#/components/page-title';
 
@@ -90,7 +99,15 @@ function InspectionPageImage() {
           return group.files.map((file) => {
             return (
               <Col key={file._id} {...COL_PROPS} xxl={4}>
-                <ImageCard file={file} />
+                <Suspense
+                  fallback={
+                    <Flex justify="center">
+                      <Spin />
+                    </Flex>
+                  }
+                >
+                  <ImageCard file={file} />
+                </Suspense>
               </Col>
             );
           });

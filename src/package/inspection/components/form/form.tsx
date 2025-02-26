@@ -6,7 +6,7 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Input } from '#/components/input';
 import { useFormValues } from '#/hooks/use-form-values';
 
-import { InspectionFormData } from '~/inspection/types';
+import type { InspectionFormData } from '~/inspection/types';
 
 import { COL_PROPS } from './constants';
 import {

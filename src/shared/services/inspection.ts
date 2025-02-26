@@ -1,9 +1,9 @@
-import axios from 'axios';
 import type {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import axios from 'axios';
 
 const apiInspection = axios.create({
   baseURL: import.meta.env.VITE_INSPECTION_SERVICE_URL,

@@ -5,6 +5,7 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu } from 'antd';
+import { useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
 import {
@@ -14,7 +15,6 @@ import {
   StyledHeader,
   StyledSider,
 } from './styles';
-import { useState } from 'react';
 
 function SharedLayout() {
   const navigate = useNavigate();

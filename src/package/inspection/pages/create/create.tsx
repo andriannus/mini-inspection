@@ -8,7 +8,7 @@ import { useMessage } from '#/contexts/message';
 
 import { generatePresignedURLs } from '~/inspection/apis/upload';
 import { InspectionForm } from '~/inspection/components/form';
-import { InspectionFormData } from '~/inspection/types';
+import type { InspectionFormData } from '~/inspection/types';
 
 function InspectionPageCreate() {
   const message = useMessage();
@@ -38,11 +38,7 @@ function InspectionPageCreate() {
 
       await Promise.all(
         data.inspections.map(async (inspection, index) => {
-          await axios.put(presignedURLs[index], inspection.file, {
-            headers: {
-              'Content-Type': inspection.file?.type,
-            },
-          });
+          await axios.put(presignedURLs[index], inspection.file);
         }),
       );
 
